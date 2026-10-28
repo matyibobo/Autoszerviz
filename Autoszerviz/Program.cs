@@ -1,3 +1,6 @@
+using Autoszerviz.Data;
+using Microsoft.EntityFrameworkCore;
+
 namespace Autoszerviz
 {
     public class Program
@@ -8,7 +11,8 @@ namespace Autoszerviz
 
             // Add services to the container.
             builder.Services.AddRazorPages();
-
+            builder.Services.AddDbContext<AutoszervizDbContext>(options =>
+                options.UseSqlite(builder.Configuration.GetConnectionString("AutoszervizDbKapcsolat")));
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
