@@ -1,10 +1,48 @@
-﻿@page
-@model IndexModel
+@page
+@model Autoszerviz.Pages.UgyfelPages.IndexModel
+
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Index";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<h1>Index</h1>
+
+<p>
+    <a asp-page="UgyfelPages/Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Ugyfel[0].Nev)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Ugyfel[0].Telefon)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Ugyfel[0].Email)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Ugyfel) {
+        <tr>
+            <td>
+                @Html.DisplayFor(model => item.Nev)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.Telefon)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.Email)
+            </td>
+            <td>
+                <a asp-page="UgyfelPages/Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-page="UgyfelPages/Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-page="UgyfelPages/Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

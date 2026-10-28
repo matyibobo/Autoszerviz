@@ -68,9 +68,10 @@ namespace Autoszerviz.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("Telefon")
+                    b.Property<string>("Telefon")
+                        .IsRequired()
                         .HasMaxLength(20)
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
