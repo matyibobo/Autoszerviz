@@ -23,7 +23,7 @@ public class DetailsModel : PageModel
             return NotFound();
         }
 
-        var javitas = await _context.Javitasok.FirstOrDefaultAsync(m => m.Id == id);
+        var javitas = await _context.Javitasok.Include(j => j.Ugyfel).FirstOrDefaultAsync(m => m.Id == id);
         if (javitas is null)
         {
             return NotFound();

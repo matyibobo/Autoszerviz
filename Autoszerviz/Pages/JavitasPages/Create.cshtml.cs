@@ -33,7 +33,7 @@ public class CreateModel : PageModel
         ModelState.Remove("Javitas.FelvetelDatuma");
         ModelState.Remove("Javitas.Allapot");
 
-        Javitas.FelvetelDatuma = DateTime.Today;
+        Javitas.FelvetelDatuma = DateTime.Now;
         Javitas.Allapot = "Felvéve";
 
         if (!ModelState.IsValid)

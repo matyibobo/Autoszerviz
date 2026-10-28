@@ -5,10 +5,10 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Ügyfelek</h1>
 
 <p>
-    <a asp-page="UgyfelPages/Create">Create New</a>
+    <a asp-page="UgyfelPages/Create">Hozzáadás</a>
 </p>
 <table class="table">
     <thead>
@@ -38,9 +38,9 @@
                 @Html.DisplayFor(model => item.Email)
             </td>
             <td>
-                <a asp-page="UgyfelPages/Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-page="UgyfelPages/Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-page="UgyfelPages/Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-page="UgyfelPages/Edit" asp-route-id="@item.Id">Szerkesztés</a> |
+                <a asp-page="UgyfelPages/Details" asp-route-id="@item.Id">Részletek</a> |
+                <a asp-page="UgyfelPages/Delete" asp-route-id="@item.Id">Törlés</a>
             </td>
         </tr>
 }

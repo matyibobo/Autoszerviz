@@ -5,10 +5,33 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Javítások</h1>
+
+<form method="get" class="row g-2 mb-3">
+    <div class="col-auto">
+        <label for="allapot" class="col-form-label">Állapot szűrése</label>
+    </div>
+    <div class="col-auto">
+        <select id="allapot" name="Allapot" class="form-select">
+            <option value="">Összes</option>
+            @foreach (var allapot in Model.Allapotok)
+            {
+                <option value="@allapot" selected="@(Model.Allapot == allapot ? "selected" : null)">@allapot</option>
+            }
+        </select>
+    </div>
+    <div class="col-auto">
+        <button type="submit" class="btn btn-secondary">Szűrés</button>
+    </div>
+</form>
+
+@if (TempData["Hiba"] is string hiba)
+{
+    <div class="alert alert-danger">@hiba</div>
+}
 
 <p>
-    <a asp-page="Create">Create New</a>
+    <a asp-page="Create">Felvétel</a>
 </p>
 <table class="table">
     <thead>
@@ -56,9 +79,17 @@
                 @Html.DisplayFor(model => item.FelvetelDatuma)
             </td>
             <td>
-                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                @if (item.Allapot != "Kész")
+                {
+                    <form method="post" asp-page-handler="AllapotLepes" class="d-inline">
+                        <input type="hidden" name="id" value="@item.Id" />
+                        <input type="hidden" name="allapot" value="@Model.Allapot" />
+                        <button type="submit" class="btn btn-sm btn-outline-primary">Állapot léptetése</button>
+                    </form>
+                }
+                <a asp-page="./Edit" asp-route-id="@item.Id">Szerkesztés</a> |
+                <a asp-page="./Details" asp-route-id="@item.Id">Részletek</a> |
+                <a asp-page="./Delete" asp-route-id="@item.Id">Törlés</a>
             </td>
         </tr>
 }

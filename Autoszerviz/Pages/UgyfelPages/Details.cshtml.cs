@@ -23,7 +23,7 @@ public class DetailsModel : PageModel
             return NotFound();
         }
 
-        var ugyfel = await _context.Ugyfelek.FirstOrDefaultAsync(m => m.Id == id);
+        var ugyfel = await _context.Ugyfelek.Include(j => j.Javitasok).FirstOrDefaultAsync(m => m.Id == id);
         if (ugyfel is null)
         {
             return NotFound();

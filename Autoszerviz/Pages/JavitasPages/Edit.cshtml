@@ -5,7 +5,7 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
+<h1>Szerkesztés</h1>
 
 <h4>Javitas</h4>
 <hr />
@@ -15,13 +15,13 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Javitas.Id" />
             <div class="form-group">
-                <span class="text-danger">*</span>
-                <label asp-for="Javitas.UgyfelId" class="control-label"></label>
-                <input asp-for="Javitas.UgyfelId" class="form-control" aria-required="true"/>
+                <label asp-for="Javitas.UgyfelId" class="control-label">Ügyfél</label>
+                <select asp-for="Javitas.UgyfelId" asp-items="Model.UgyfelLista" class="form-control" aria-required="true">
+                    <option value="">-- Válassz ügyfelet --</option>
+                </select>
                 <span asp-validation-for="Javitas.UgyfelId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <span class="text-danger">*</span>
                 <label asp-for="Javitas.Rendszam" class="control-label"></label>
                 <input asp-for="Javitas.Rendszam" class="form-control" aria-required="true"/>
                 <span asp-validation-for="Javitas.Rendszam" class="text-danger"></span>
@@ -33,33 +33,18 @@
             </div>
             <div class="form-group">
                 <label asp-for="Javitas.Koltseg" class="control-label"></label>
-                <input asp-for="Javitas.Koltseg" class="form-control" />
+                <input asp-for="Javitas.Koltseg" class="form-control" type="number" step="1" min="0" asp-format="{0:0}" />
                 <span asp-validation-for="Javitas.Koltseg" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Javitas.Allapot" class="control-label"></label>
-                <input asp-for="Javitas.Allapot" class="form-control" />
-                <span asp-validation-for="Javitas.Allapot" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Javitas.FelvetelDatuma" class="control-label"></label>
-                <input asp-for="Javitas.FelvetelDatuma" class="form-control" />
-                <span asp-validation-for="Javitas.FelvetelDatuma" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Javitas.Ugyfel" class="control-label"></label>
-                <input asp-for="Javitas.Ugyfel" class="form-control" />
-                <span asp-validation-for="Javitas.Ugyfel" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Mentés" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-page="./Index">Back to List</a>
+    <a asp-page="./Index">Vissza</a>
 </div>
 
 @section Scripts {

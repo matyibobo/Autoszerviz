@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Autoszerviz.Models;
 using Autoszerviz.Data;
@@ -18,6 +19,8 @@ public class EditModel : PageModel
     [BindProperty]
     public Javitas Javitas { get; set; } = default!;
 
+    public SelectList UgyfelLista { get; set; } = default!;
+
     public async Task<IActionResult> OnGetAsync(int? id)
     {
         if (id is null)
@@ -25,12 +28,13 @@ public class EditModel : PageModel
             return NotFound();
         }
 
-        var javitas = await _context.Javitasok.FirstOrDefaultAsync(m => m.Id == id);
+        var javitas = await _context.Javitasok.AsNoTracking().FirstOrDefaultAsync(m => m.Id == id);
         if (javitas is null)
         {
             return NotFound();
         }
         Javitas = javitas;
+        await UgyfelekBetolteseAsync();
         return Page();
     }
 
@@ -38,12 +42,26 @@ public class EditModel : PageModel
     // For more details, see https://aka.ms/RazorPagesCRUD.
     public async Task<IActionResult> OnPostAsync()
     {
+        ModelState.Remove("Javitas.Ugyfel");
+        ModelState.Remove("Javitas.Allapot");
+        ModelState.Remove("Javitas.FelvetelDatuma");
+
         if (!ModelState.IsValid)
         {
+            await UgyfelekBetolteseAsync();
             return Page();
         }
 
-        _context.Attach(Javitas).State = EntityState.Modified;
+        var javitas = await _context.Javitasok.FindAsync(Javitas.Id);
+        if (javitas is null)
+        {
+            return NotFound();
+        }
+
+        javitas.UgyfelId = Javitas.UgyfelId;
+        javitas.Rendszam = Javitas.Rendszam;
+        javitas.Leiras = Javitas.Leiras;
+        javitas.Koltseg = Javitas.Koltseg;
 
         try
         {
@@ -62,6 +80,15 @@ public class EditModel : PageModel
         }
 
         return RedirectToPage("./Index");
+    }
+
+    private async Task UgyfelekBetolteseAsync()
+    {
+        UgyfelLista = new SelectList(
+            await _context.Ugyfelek.OrderBy(u => u.Nev).ToListAsync(),
+            "Id",
+            "Nev",
+            Javitas?.UgyfelId);
     }
 
     private bool JavitasExists(int id)
