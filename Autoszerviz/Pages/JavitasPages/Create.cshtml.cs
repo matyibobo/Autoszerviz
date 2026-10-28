@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Autoszerviz.Models;
 using Autoszerviz.Data;
@@ -15,19 +16,29 @@ public class CreateModel : PageModel
         _context = context;
     }
 
-    public IActionResult OnGet()
+    [BindProperty]
+    public Javitas Javitas { get; set; } = new();
+
+    public SelectList UgyfelLista { get; set; } = default!;
+
+    public async Task<IActionResult> OnGetAsync()
     {
+        await UgyfelekBetolteseAsync();
         return Page();
     }
 
-    [BindProperty]
-    public Javitas Javitas { get; set; } = default!;
-
-    // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD.
     public async Task<IActionResult> OnPostAsync()
     {
+        ModelState.Remove("Javitas.Ugyfel");
+        ModelState.Remove("Javitas.FelvetelDatuma");
+        ModelState.Remove("Javitas.Allapot");
+
+        Javitas.FelvetelDatuma = DateTime.Today;
+        Javitas.Allapot = "Felvéve";
+
         if (!ModelState.IsValid)
         {
+            await UgyfelekBetolteseAsync();
             return Page();
         }
 
@@ -35,5 +46,16 @@ public class CreateModel : PageModel
         await _context.SaveChangesAsync();
 
         return RedirectToPage("./Index");
+    }
+
+    private async Task UgyfelekBetolteseAsync()
+    {
+        UgyfelLista = new SelectList(
+            await _context.Ugyfelek
+                .OrderBy(u => u.Nev)
+                .ToListAsync(),
+            "Id",
+            "Nev"
+        );
     }
 }

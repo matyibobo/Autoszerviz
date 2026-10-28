@@ -5,12 +5,9 @@
       "type": "mssql",
       "connectionId": "ConnectionStrings:AutoszervizDbKapcsolat"
     },
-    "secrets1": {
-      "type": "secrets"
-    },
     "sqlite1": {
       "type": "sqlite",
-      "connectionId": "ConnectionStrings:AutoszervizDbKapcsolat",
+      "connectionId": "ConnectionStrings:AutoDbKapcsolat",
       "dynamicId": null
     }
   }

@@ -5,13 +5,10 @@
       "type": "mssql",
       "connectionId": "ConnectionStrings:AutoszervizDbKapcsolat"
     },
-    "secrets1": {
-      "type": "secrets.user"
-    },
     "sqlite1": {
       "secretStore": "LocalSecretsFile",
       "type": "sqlite.local",
-      "connectionId": "ConnectionStrings:AutoszervizDbKapcsolat",
+      "connectionId": "ConnectionStrings:AutoDbKapcsolat",
       "dynamicId": null
     }
   }

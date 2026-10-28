@@ -27,7 +27,7 @@ namespace Autoszerviz.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<DateOnly>("FelvetelDatuba")
+                    b.Property<DateTime>("FelvetelDatuma")
                         .HasColumnType("TEXT");
 
                     b.Property<decimal>("Koltseg")
